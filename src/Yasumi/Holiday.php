@@ -48,6 +48,133 @@ class Holiday extends DateTime implements JsonSerializable
     const TYPE_OTHER = 'other';
 
     /**
+     * Tag for religious holidays.
+     *
+     * Examples: Easter Day, Christmas Eve.
+     *
+     * Some holidays may historically have been celebrated as religious holidays
+     * or coincide with religious holidays, but this tag should only be used
+     * if the day is still considered a religious holiday today.
+     */
+    const TAG_SUBJECT_RELIGION = 'religion';
+
+    /**
+     * Tag for holidays celebrating the country.
+     *
+     * Examples: Constitution Day, National Day.
+     */
+    const TAG_SUBJECT_COUNTRY = 'country';
+
+    /**
+     * Tag for holidays celebrating a specific person.
+     *
+     * Example: Martin Luther King Day.
+     *
+     * This tag may be used for historical religious persons, such as bishops.
+     * Holidays celebrating deities and others mentioned in the sacret texts
+     * (e.g. Jesus, Muhammad etc.) should use TAG_SUBJECT_RELIGION instead.
+     */
+    const TAG_SUBJECT_PERSON = 'person';
+
+    /**
+     * Tag for holidays celebrating or raising awareness about a cause.
+     *
+     * Example: Mother's Day, Labour Day.
+     */
+    const TAG_SUBJECT_CAUSE = 'cause';
+
+    /**
+     * Tag for holidays commemorating events related to war.
+     *
+     * Example: Armistice Day (celebrates end of WW1).
+     */
+    const TAG_SUBJECT_WAR = 'war';
+
+    /**
+     * Tag for holidays preceeding important official or observed holidays.
+     *
+     * Examples: Christmas Eve, New Year's Day's Eve.
+     *
+     * This tag is used for days that are not considered official holidays in
+     * their own right, but are celebrated in the evening on the day preceeding
+     * an important holiday.
+     */
+    const TAG_SUBJECT_EVE = 'eve';
+
+    /**
+     * Tag for holidays following important official or observed holidays.
+     *
+     * Examples: Day after Thanksgiving.
+     *
+     * This tag is used for days that are not considered official holidays in
+     * their own right, but are celebrated on the day after an important holiday.
+     *
+     * This tag is not used for days that are part of celebrations spanning
+     * several days such as Second Day of Christmas, Easter Monday or Carnival.
+     */
+    const TAG_SUBJECT_DAY_AFTER = 'day_after';
+
+    /**
+     * Tag for holidays where banks are closed.
+     */
+    const TAG_BANK_CLOSED = 'bank_closed';
+
+    /**
+     * Tag for holidays where most shops are closed.
+     */
+    const TAG_SHOP_CLOSED = 'shop_closed_some';
+
+    /**
+     * Tag for holidays where a significant number of shops are closed.
+     */
+    const TAG_SHOP_CLOSED_SOME = 'shop_closed_some';
+
+    /**
+     * Tag for holidays where a significant number of shops are closed are closed at least part of the day.
+     */
+    const TAG_SHOP_CLOSED_PARTIAL = 'shop_closed_partial';
+
+    /**
+     * Tag for holidays where the majority of employees have the day off.
+     */
+    const TAG_DAY_OFF = 'day_off';
+
+    /**
+     * Tag for holidays where a significant number of employees have the day off.
+     *
+     * This tag is only used for days where employees have the day off, because
+     * the company/office is closed, not for days that are popular to take a
+     * voluntary vacation day.
+     */
+    const TAG_DAY_OFF_SOME = 'day_off_some';
+
+    /**
+     * Tag for holidays where a significant number of employees have the day off at least part of they day.
+     */
+    const TAG_DAY_OFF_PARTIAL = 'day_off_some';
+
+    /**
+     * Tag for holidays that are celebrated in many federal states.
+     *
+     * This tag is used on holidays that are celebrated in at least half of all
+     * federal states.
+     */
+    const TAG_OFFICIAL_STATE_MANY = 'state_many';
+
+    /**
+     * Tag for holidays that are only celebrated in few federal states.
+     *
+     * This tag is used on holidays that are celebrated in less than half of all
+     * federal states.
+     */
+    const TAG_OFFICIAL_STATE_FEW = 'state_few';
+
+    /**
+     * Tag for holidays that are only celebrated in some regions.
+     */
+    const TAG_OFFICIAL_REGION = 'region';
+
+    /**
      * The default locale. Used for translations of holiday names and other text strings.
      */
     const DEFAULT_LOCALE = 'en_US';

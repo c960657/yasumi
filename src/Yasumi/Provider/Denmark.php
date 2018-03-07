@@ -42,22 +42,42 @@ class Denmark extends AbstractProvider
     {
         $this->timezone = 'Europe/Copenhagen';
 
+
         // Add common holidays
-        $this->addHoliday($this->newYearsDay($this->year, $this->timezone, $this->locale));
+        $tags = [Holiday::TAG_OFFICE_CLOSED, Holiday::TAG_SHOP_CLOSED, self::Holiday::TAG_BANK_CLOSED];
+        $this->addHoliday($this->newYearsDay($this->year, $this->timezone, $this->locale, self::TYPE_OFFICIAL, $tags));
 
         // Add common Christian holidays (common in Denmark)
-        $this->addHoliday($this->maundyThursday($this->year, $this->timezone, $this->locale));
-        $this->addHoliday($this->goodFriday($this->year, $this->timezone, $this->locale));
-        $this->addHoliday($this->easter($this->year, $this->timezone, $this->locale));
-        $this->addHoliday($this->easterMonday($this->year, $this->timezone, $this->locale));
-        $this->addHoliday($this->ascensionDay($this->year, $this->timezone, $this->locale));
-        $this->addHoliday($this->pentecost($this->year, $this->timezone, $this->locale));
-        $this->addHoliday($this->pentecostMonday($this->year, $this->timezone, $this->locale));
-        $this->addHoliday($this->christmasDay($this->year, $this->timezone, $this->locale));
-        $this->addHoliday($this->secondChristmasDay($this->year, $this->timezone, $this->locale));
+        $tags = [Holiday::TAG_OFFICE_CLOSED, Holiday::TAG_SHOP_CLOSED, self::Holiday::TAG_BANK_CLOSED, Holiday::TAG_SUBJECT_RELIGION];
+        $this->addHoliday($this->maundyThursday($this->year, $this->timezone, $this->locale, self::TYPE_OFFICIAL, $tags));
+        $this->addHoliday($this->goodFriday($this->year, $this->timezone, $this->locale, self::TYPE_OFFICIAL, $tags));
+        $this->addHoliday($this->easter($this->year, $this->timezone, $this->locale, self::TYPE_OFFICIAL, $tags));
+        $this->addHoliday($this->easterMonday($this->year, $this->timezone, $this->locale, self::TYPE_OFFICIAL, $tags));
+        $this->addHoliday($this->ascensionDay($this->year, $this->timezone, $this->locale, self::TYPE_OFFICIAL, $tags));
+        $this->addHoliday($this->pentecost($this->year, $this->timezone, $this->locale, self::TYPE_OFFICIAL, $tags));
+        $this->addHoliday($this->pentecostMonday($this->year, $this->timezone, $this->locale, self::TYPE_OFFICIAL, $tags));
+        $this->addHoliday($this->christmasDay($this->year, $this->timezone, $this->locale, self::TYPE_OFFICIAL, $tags));
+        $this->addHoliday($this->secondChristmasDay($this->year, $this->timezone, $this->locale, self::TYPE_OFFICIAL, $tags));
 
         // Calculate other holidays
-        $this->calculateGreatPrayerDay();
+        $this->calculateGreatPrayerDay($tags);
+
+        // According to Lukkeloven (Opening Hours Act), shops are closed on Christmas Eve, Constitution Day,
+        // and on New Year's Eve after 15:00.
+        $tags = [Holiday::TAG_DAY_OFF_SOME, Holiday::TAG_SHOP_CLOSED, Holiday::TAG_BANK_CLOSED, Holiday::TAG_SUBJECT_EVE, Holiday::TAG_SUBJECT_RELIGION];
+        $this->addHoliday($this->christmasEve($this->year, $this->timezone, $this->locale, self::TYPE_OBSERVED, $tags));
+        $tags = [Holiday::TAG_DAY_OFF_SOME, Holiday::TAG_SHOP_CLOSED_PARTIAL, Holiday::TAG_BANK_CLOSED, Holiday::TAG_SUBJECT_EVE];
+        $this->addHoliday($this->newYearsEve($this->year, $this->timezone, $this->locale, self::TYPE_OBSERVED, $tags));
+        $tags = [Holiday::TAG_DAY_OFF_SOME, Holiday::TAG_SHOP_CLOSED, Holiday::TAG_BANK_CLOSED, Holiday::TAG_SUBJECT_COUNTRY];
+        $this->addHoliday($this->constitutionDay($this->year, $this->timezone, $this->locale, self::TYPE_OBSERVED, $tags));
+
+        // International Worker's Day is a whole or half day off by collective agreement in many industries.
+        $tags = [Holiday::TAG_DAY_OFF_SOME, Holiday::TAG_DAY_OFF_PARTIAL, Holiday::TAG_SUBJECT_CAUSE];
+        $this->addHoliday($this->internationalWorkersDay($this->year, $this->timezone, $this->locale, self::TYPE_OBSERVED, $tags));
+
+        // Banks are closed the day after Ascension day.
+        $tags = [Holiday::TAG_BANK_CLOSED, Holiday::TAG_DAY_AFTER];
+        $this->addHoliday($this->dayAfterAscensionDay($this->year, $this->timezone, $this->locale, self::TYPE_OBSERVED, $tags));
     }
 
     /**
@@ -76,7 +96,7 @@ class Denmark extends AbstractProvider
      * @throws \Yasumi\Exception\UnknownLocaleException
      * @throws \Exception
      */
-    public function calculateGreatPrayerDay()
+    public function calculateGreatPrayerDay($tags)
     {
         $easter = $this->calculateEaster($this->year, $this->timezone)->format('Y-m-d');
 
@@ -85,7 +105,9 @@ class Denmark extends AbstractProvider
                 'greatPrayerDay',
                 ['da_DK' => 'Store Bededag'],
                 new DateTime("fourth friday $easter", new DateTimeZone($this->timezone)),
-                $this->locale
+                $this->locale,
+                self::TYPE_OFFICIAL,
+                $tags
             ));
         }
     }
