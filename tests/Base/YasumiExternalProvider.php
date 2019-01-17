@@ -12,20 +12,38 @@
 
 namespace Yasumi\tests\Base;
 
+use IteratorAggregate;
 use Yasumi\ProviderInterface;
+use Yasumi\TranslationsInterface;
 
 /**
  * Class YasumiExternalProvider.
  *
  * Class for testing the use of an external holiday provider class.
  */
-class YasumiExternalProvider implements ProviderInterface
+class YasumiExternalProvider implements IteratorAggregate, ProviderInterface
 {
-    /**
-     * Initialize country holidays.
-     */
-    public function initialize(): void
+    public function __construct($year, $locale = '', TranslationsInterface $globalTranslations = null)
     {
-        // We don't actually have to do anything here.
+    }
+
+    public function getYear(): int
+    {
+        return 2000;
+    }
+
+    public function isWorkingDay(\DateTimeInterface $date): bool
+    {
+        return false;
+    }
+
+    public function count(): int
+    {
+        return 0;
+    }
+
+    public function getIterator(): Traversable
+    {
+        return new ArrayObject();
     }
 }

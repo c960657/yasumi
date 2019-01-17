@@ -26,7 +26,7 @@ use Yasumi\Yasumi;
 /**
  * Class AbstractProvider.
  */
-abstract class AbstractProvider implements ProviderInterface, Countable, IteratorAggregate
+abstract class AbstractProvider implements IteratorAggregate, Countable, ProviderInterface
 {
     /**
      * Code to identify the Holiday Provider. Typically this is the ISO3166 code corresponding to the respective

@@ -20,9 +20,15 @@ namespace Yasumi;
  * @see     AbstractProvider
  */
 interface ProviderInterface
+// These two interfaces will be added in Yasumi 3.0.
+// extends \Countable, \Traversable
 {
-    /**
-     * Initialize country holidays.
-     */
-    public function initialize();
+    // This method will be added to the interface in Yasumi 3.0.
+    // public function __construct($year, $locale = 'en_US', TranslationsInterface $globalTranslations = null);
+
+    // This method will be added to the interface in Yasumi 3.0.
+    // public function getYear(): int;
+
+    // This method will be added to the interface in Yasumi 3.0.
+    // public function isWorkingDay(\DateTimeInterface $date): bool;
 }
