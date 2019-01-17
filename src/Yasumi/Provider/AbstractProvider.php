@@ -123,24 +123,6 @@ abstract class AbstractProvider implements ProviderInterface, Countable, Iterato
     }
 
     /**
-     * Internal function to compare dates in order to sort them chronologically.
-     *
-     * @param \DateTimeInterface $dateA First date
-     * @param \DateTimeInterface $dateB Second date
-     *
-     * @return int result where 0 means dates are equal, -1 the first date is before the second date, and 1 if the
-     *             second date is after the first.
-     */
-    private static function compareDates(\DateTimeInterface $dateA, \DateTimeInterface $dateB): int
-    {
-        if ($dateA === $dateB) {
-            return 0;
-        }
-
-        return ($dateA < $dateB) ? -1 : 1;
-    }
-
-    /**
      * Adds a holiday to the holidays providers (i.e. country/state) list of holidays.
      *
      * @param Holiday $holiday Holiday instance (representing a holiday) to be added to the internal list
@@ -153,7 +135,7 @@ abstract class AbstractProvider implements ProviderInterface, Countable, Iterato
         }
 
         $this->holidays[$holiday->shortName] = $holiday;
-        \uasort($this->holidays, [__CLASS__, 'compareDates']);
+        \asort($this->holidays);
     }
 
 
