@@ -61,7 +61,7 @@ class France extends AbstractProvider
         $this->addHoliday($this->assumptionOfMary($this->year, $this->timezone, $this->locale));
         $this->addHoliday($this->allSaintsDay($this->year, $this->timezone, $this->locale));
 
-        if ($this->year >= 1919) {
+        if ($this->year >= 1922) {
             $this->addHoliday($this->armisticeDay($this->year, $this->timezone, $this->locale));
         }
 

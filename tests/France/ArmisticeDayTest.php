@@ -33,14 +33,14 @@ class ArmisticeDayTest extends FranceBaseTestCase implements HolidayTestCase
     /**
      * The year in which the holiday was first established.
      */
-    public const ESTABLISHMENT_YEAR = 1919;
+    public const ESTABLISHMENT_YEAR = 1922;
 
     /**
-     * Tests Armistice Day on or after 1919.
+     * Tests Armistice Day on or after 1922.
      *
      * @throws \Exception
      */
-    public function testArmisticeDayOnAfter1919(): void
+    public function testArmisticeDayOnAfter1922(): void
     {
         $year = $this->generateRandomYear(self::ESTABLISHMENT_YEAR);
         $this->assertHoliday(
@@ -52,11 +52,11 @@ class ArmisticeDayTest extends FranceBaseTestCase implements HolidayTestCase
     }
 
     /**
-     * Tests Armistice Day before 1919.
+     * Tests Armistice Day before 1922.
      *
      * @throws \Exception
      */
-    public function testArmisticeDayBefore1919(): void
+    public function testArmisticeDayBefore1922(): void
     {
         $this->assertNotHoliday(
             self::REGION,
